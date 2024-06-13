@@ -7,24 +7,19 @@ async function getUserData(id) {
     db2: db2,
     db3: db3,
   };
+  let myObj = {};
 
-  const myObj = { id: id };
   try {
     const vaultData = await vault(id);
     const centralData = await central(id);
     const dbData = await dbs[centralData](id);
-    Promise.all([vaultData, dbData]).then((value) => {
-      value.forEach((element) => {
-        for (const key in element) {
-          myObj[key] = element[key];
-        }
-      });
-    });
+
+    let myObj = { id: id, ...vaultData, ...dbData };
+
+    return myObj;
   } catch (error) {
     console.log(error);
   }
-
-  return myObj;
 }
 
 getUserData(4).then((value) => console.log(value));
