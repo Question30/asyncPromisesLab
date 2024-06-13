@@ -7,7 +7,6 @@ async function getUserData(id) {
     db2: db2,
     db3: db3,
   };
-  let myObj = {};
 
   try {
     const vaultData = await vault(id);
